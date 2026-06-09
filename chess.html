@@ -385,9 +385,10 @@ let currentElo   = suggestElo(playerRating, 'draw');
 function initStockfish() {
   setSFStatus('loading');
   const urls = [
-    // Primary: reliable jsDelivr mirror of nmrugg's stockfish.js
-    'https://cdn.jsdelivr.net/npm/stockfish.js@10.0.2/stockfish.js',
-    // Fallback: cdnjs
+    // Same-origin: bundled in repo (most reliable, works offline, no CORS)
+    './stockfish.js',
+    // Remote fallbacks (require network, may hit CORS on some hosts)
+    'https://raw.githubusercontent.com/lichess-org/stockfish.js/master/stockfish.js',
     'https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js',
   ];
   tryLoadSF(urls, 0);
