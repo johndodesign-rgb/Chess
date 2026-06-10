@@ -295,31 +295,144 @@ const RANKS = ['8','7','6','5','4','3','2','1'];
 //  OPENINGS
 // ═══════════════════════════════════════════════════════
 const OPENINGS = [
-  {p:['e4','e5','Nf3','Nc6','Bb5'],n:"Ruy López",d:"One of chess's oldest openings — indirect pressure on the c6 knight targets the e5 pawn."},
-  {p:['e4','e5','Nf3','Nc6','Bc4'],n:"Italian Game",d:"The bishop eyes f7. Principled and aggressive, favored for centuries."},
-  {p:['e4','e5','Nf3','Nc6','d4'],n:"Scotch Game",d:"Immediate central confrontation. Fischer and Kasparov both turned to this."},
-  {p:['e4','e5','Nf3','Nc6'],n:"Two Knights (prep)",d:"Black develops symmetrically, preparing to contest the center."},
-  {p:['e4','e5','Nf3'],n:"King's Knight Opening",d:"Most principled response — knight toward the center, preparing to castle."},
-  {p:['e4','c5','Nf3','d6','d4'],n:"Sicilian — Open",d:"White accepts the asymmetry. Sharp play with opposite-side attacking chances."},
-  {p:['e4','c5','Nf3','Nc6','d4'],n:"Sicilian — Open",d:"Central tension explodes early. Both sides fight for initiative."},
-  {p:['e4','c5'],n:"Sicilian Defense",d:"The most popular and combative reply to e4 — asymmetric central fight."},
-  {p:['e4','e6'],n:"French Defense",d:"Solid and strategic — Black accepts cramp for a resilient pawn structure."},
-  {p:['e4','c6'],n:"Caro-Kann Defense",d:"Structurally sound — aims for a strong d5 pawn without French's weaknesses."},
-  {p:['e4','e5'],n:"Open Game",d:"Double king's pawn — classical, direct, rich in tactical possibility."},
-  {p:['d4','d5','c4','e6'],n:"Queen's Gambit Declined",d:"Black declines the gambit, building a solid compact position."},
-  {p:['d4','d5','c4','dxc4'],n:"Queen's Gambit Accepted",d:"Black takes the pawn, inviting open, active play."},
-  {p:['d4','d5','c4'],n:"Queen's Gambit",d:"Not truly a gambit — White gains central control. One of chess's most studied openings."},
-  {p:['d4','Nf6','c4','g6'],n:"King's Indian Defense",d:"Hypermodern — Black lets White build a center, then attacks it. A fighter's opening."},
-  {p:['d4','Nf6','c4','e6','Nf3','b6'],n:"Queen's Indian Defense",d:"Control the center with pieces rather than pawns. Sophisticated and deep."},
-  {p:['d4','Nf6','c4','e6','Nc3','Bb4'],n:"Nimzo-Indian Defense",d:"Black pins the knight and challenges White's central ambitions from move three."},
-  {p:['d4','Nf6'],n:"Indian Defense Systems",d:"Black avoids an immediate central confrontation, preparing flank counterplay."},
-  {p:['d4','d5'],n:"Closed Game",d:"Queens' pawn openings lean strategic and positional. Center contested over time."},
-  {p:['e4','d6'],n:"Pirc Defense",d:"Provocative hypermodern — Black allows White a big center, then attacks it."},
-  {p:['e4','g6'],n:"Modern Defense",d:"Similar to the Pirc — Black challenges White's center from the flanks via g6."},
-  {p:['Nf3'],n:"Réti Opening",d:"Hypermodern — White controls the center from a distance with flanking play."},
-  {p:['c4'],n:"English Opening",d:"Flexible and asymmetrical — controls d5 from the flank, often transposes."},
-  {p:['e4'],n:"King's Pawn Opening",d:"Most direct opening — staking a central claim and opening lines for queen and bishop."},
-  {p:['d4'],n:"Queen's Pawn Opening",d:"Solid positional approach — controlling the center while keeping options open."},
+  // ── RUY LOPEZ / SPANISH ─────────────────────────────────
+  {p:['e4','e5','Nf3','Nc6','Bb5','a6','Ba4','Nf6','O-O','Be7','Re1','b5','Bb3','d6','c3','O-O'],n:"Ruy López — Closed",d:"The main line of the Spanish. Both sides castle and prepare for a complex strategic middlegame with White aiming for d4."},
+  {p:['e4','e5','Nf3','Nc6','Bb5','a6','Ba4','Nf6','O-O','Nxe4'],n:"Ruy López — Open Defense",d:"Black grabs the e4 pawn immediately. Leads to sharp, forcing play where both kings can feel the heat."},
+  {p:['e4','e5','Nf3','Nc6','Bb5','Nf6'],n:"Ruy López — Berlin Defense",d:"The Berlin — famously solid and drawish. Kasparov couldn't crack it against Kramnik in 2000, making it a top choice for players seeking endgame play."},
+  {p:['e4','e5','Nf3','Nc6','Bb5','d6'],n:"Ruy López — Steinitz Defense",d:"A solid but passive choice — Black props the e5 pawn but concedes some space. The old Steinitz line."},
+  {p:['e4','e5','Nf3','Nc6','Bb5','Bc5'],n:"Ruy López — Classical Variation",d:"Black develops the bishop to the most active square and prepares to challenge White's center."},
+  {p:['e4','e5','Nf3','Nc6','Bb5','a6','Ba4','Nf6','O-O','Be7','Re1','b5','Bb3','O-O','c3','d5'],n:"Ruy López — Marshall Attack",d:"Frank Marshall's famous gambit — Black sacrifices a pawn for devastating kingside attacking chances. Still feared today."},
+  {p:['e4','e5','Nf3','Nc6','Bb5','a6'],n:"Ruy López — Morphy Defense",d:"The most common reply — Black immediately challenges the bishop's indirect pressure before it can retreat."},
+  {p:['e4','e5','Nf3','Nc6','Bb5'],n:"Ruy López",d:"One of chess's oldest and most respected openings — the bishop indirectly pressures e5 by targeting the c6 knight."},
+
+  // ── ITALIAN / GIUOCO PIANO ──────────────────────────────
+  {p:['e4','e5','Nf3','Nc6','Bc4','Bc5','c3','Nf6','d4'],n:"Giuoco Piano — Main Line",d:"White pushes d4 to contest the center. Named 'quiet game' by Italians, though the resulting positions are anything but."},
+  {p:['e4','e5','Nf3','Nc6','Bc4','Bc5','b4'],n:"Evans Gambit",d:"A 19th-century attacking gambit — White sacrifices the b-pawn for rapid development and central control. Morphy and Kasparov have played it."},
+  {p:['e4','e5','Nf3','Nc6','Bc4','Nf6'],n:"Two Knights Defense",d:"Black counterattacks immediately rather than mirroring with Bc5. Can lead to sharp lines including the Fried Liver Attack."},
+  {p:['e4','e5','Nf3','Nc6','Bc4','Nf6','Ng5'],n:"Two Knights — Fried Liver Attack (prep)",d:"White's aggressive Ng5 threatens the f7 pawn. Black must respond carefully or face a ferocious sacrificial attack."},
+  {p:['e4','e5','Nf3','Nc6','Bc4','Bc5'],n:"Italian Game — Giuoco Piano",d:"The bishop goes to its most active diagonal. One of the oldest recorded openings — 'the quiet game' that can become very sharp."},
+  {p:['e4','e5','Nf3','Nc6','Bc4'],n:"Italian Game",d:"The bishop eyes f7, Black's most vulnerable point. A principled, aggressive opening favored for centuries."},
+
+  // ── SCOTCH ──────────────────────────────────────────────
+  {p:['e4','e5','Nf3','Nc6','d4','exd4','Nxd4','Nf6','Nxc6'],n:"Scotch Game — Mieses Variation",d:"White immediately exchanges on c6, doubling Black's pawns but giving up the center. Used heavily by Kasparov."},
+  {p:['e4','e5','Nf3','Nc6','d4','exd4','Nxd4','Bc5'],n:"Scotch Game — Classical",d:"Black develops the bishop to its best square, targeting the d4 knight and playing for central counterplay."},
+  {p:['e4','e5','Nf3','Nc6','d4','exd4','Bc4'],n:"Scotch Gambit",d:"Instead of recapturing, White develops aggressively with Bc4. Similar ideas to the Italian and can transpose."},
+  {p:['e4','e5','Nf3','Nc6','d4'],n:"Scotch Game",d:"White immediately contests the center on move 3. Kasparov revived this as an alternative to the Ruy López."},
+
+  // ── KING'S GAMBIT ────────────────────────────────────────
+  {p:['e4','e5','f4','exf4','Nf3'],n:"King's Gambit — King's Knight Gambit",d:"The classical continuation — White develops the knight and prepares to recover the pawn while maintaining initiative."},
+  {p:['e4','e5','f4','exf4','Bc4'],n:"King's Gambit — Bishop's Gambit",d:"White immediately develops the bishop. A romantic 19th-century line that offers tactical fireworks."},
+  {p:['e4','e5','f4'],n:"King's Gambit",d:"One of the oldest and most aggressive openings — White sacrifices a pawn for rapid central control and attacking chances."},
+
+  // ── PETROV / PHILIDOR ───────────────────────────────────
+  {p:['e4','e5','Nf3','Nf6'],n:"Petrov Defense",d:"Black mirrors White's knight development. Solid and somewhat drawish — a favorite of players who want a symmetrical, safe game."},
+  {p:['e4','e5','Nf3','d6'],n:"Philidor Defense",d:"Solid but passive — Black supports the e5 pawn with the d-pawn. Nimble in the hands of experts but can be cramped for beginners."},
+
+  // ── SICILIAN ─────────────────────────────────────────────
+  {p:['e4','c5','Nf3','d6','d4','cxd4','Nxd4','Nf6','Nc3','a6'],n:"Sicilian — Najdorf",d:"The most popular chess opening in the world. Black prepares queenside counterplay while keeping options open. Fischer and Kasparov's weapon of choice."},
+  {p:['e4','c5','Nf3','d6','d4','cxd4','Nxd4','Nf6','Nc3','g6'],n:"Sicilian — Dragon",d:"Black fianchettos the bishop on g7, creating a 'dragon' pawn formation. One of the sharpest openings — both sides attack with everything."},
+  {p:['e4','c5','Nf3','d6','d4','cxd4','Nxd4','Nf6','Nc3','e6'],n:"Sicilian — Scheveningen",d:"A flexible system — Black builds a solid 6-pawn center and prepares counterplay. Subtler than the Najdorf but equally rich."},
+  {p:['e4','c5','Nf3','Nc6','d4','cxd4','Nxd4','g6'],n:"Sicilian — Accelerated Dragon",d:"Black fianchettos immediately without ...d6, saving a tempo. Avoids some of White's sharpest lines against the standard Dragon."},
+  {p:['e4','c5','Nf3','e6','d4','cxd4','Nxd4','a6'],n:"Sicilian — Kan (Paulsen)",d:"Black's flexible a6 keeps options open. Can transpose to the Najdorf or Taimanov. A positional, somewhat mysterious choice."},
+  {p:['e4','c5','Nf3','Nc6','d4','cxd4','Nxd4','e6'],n:"Sicilian — Taimanov",d:"Black develops both knights before committing the d-pawn. A flexible modern system with rich positional play."},
+  {p:['e4','c5','Nf3','d6','d4','cxd4','Nxd4','Nf6','Nc3','Nc6'],n:"Sicilian — Classical",d:"One of the oldest Sicilian systems — solid and well-tested. Black develops naturally and fights for central control."},
+  {p:['e4','c5','Nc3'],n:"Sicilian — Closed",d:"White avoids the Open Sicilian, opting for a slower buildup. Less theoretical but no less complex."},
+  {p:['e4','c5','c3'],n:"Sicilian — Alapin",d:"White prepares d4 without allowing the complex Open Sicilian. A solid anti-Sicilian — less theory, strategic play."},
+  {p:['e4','c5','b4'],n:"Sicilian — Wing Gambit",d:"An aggressive anti-Sicilian gambit — White sacrifices the b-pawn to disrupt Black's queenside plans immediately."},
+  {p:['e4','c5','Nf3','d6','d4','cxd4','Nxd4'],n:"Sicilian — Open",d:"White accepts the asymmetry. Positions are typically sharp with opposite-side attacking chances for both players."},
+  {p:['e4','c5','Nf3','Nc6','d4','cxd4','Nxd4'],n:"Sicilian — Open (Nc6)",d:"Central tension explodes early. Rich tactical and strategic complexity lies ahead for both sides."},
+  {p:['e4','c5'],n:"Sicilian Defense",d:"The most popular and combative reply to e4 — Black fights for the center asymmetrically, creating rich imbalanced positions."},
+
+  // ── FRENCH DEFENSE ──────────────────────────────────────
+  {p:['e4','e6','d4','d5','Nc3','Bb4'],n:"French — Winawer Variation",d:"Black pins the knight immediately. Creates doubled pawns on White's queenside in exchange for active piece play. Very sharp."},
+  {p:['e4','e6','d4','d5','Nd2'],n:"French — Tarrasch Variation",d:"White avoids the pin with Nc3 and plays Nd2. Slightly passive but avoids the Winawer complications."},
+  {p:['e4','e6','d4','d5','Nc3','Nf6','Bg5'],n:"French — Classical",d:"White pins the f6 knight. The classical continuation leads to rich middlegame play with pawn tension in the center."},
+  {p:['e4','e6','d4','d5','e5'],n:"French — Advance Variation",d:"White stakes space aggressively. Black targets the d4 pawn with c5 — a strategic battle over the center chain."},
+  {p:['e4','e6','d4','d5','exd5'],n:"French — Exchange Variation",d:"White exchanges pawns, creating a symmetrical position. Less ambitious but leads to a slightly easier game for White."},
+  {p:['e4','e6','d4','d5','Nc3'],n:"French — Classical Setup",d:"White develops normally, maintaining central tension. The game will revolve around control of the d4 and e5 squares."},
+  {p:['e4','e6'],n:"French Defense",d:"Solid and strategic — Black accepts a cramped position in exchange for a resilient pawn structure and queenside counterplay."},
+
+  // ── CARO-KANN ────────────────────────────────────────────
+  {p:['e4','c6','d4','d5','Nc3','dxe4','Nxe4','Bf5'],n:"Caro-Kann — Classical",d:"Black develops the bishop outside the pawn chain before closing the position. One of the most principled responses in the Caro-Kann."},
+  {p:['e4','c6','d4','d5','Nc3','dxe4','Nxe4','Nd7'],n:"Caro-Kann — Karpov Variation",d:"Named for Karpov's use — Black develops the knight to d7 for a solid, slightly passive but very resilient setup."},
+  {p:['e4','c6','d4','d5','e5'],n:"Caro-Kann — Advance",d:"White stakes space with e5. Black targets d4 with c5, similar to the French Advance but without the bad light-squared bishop."},
+  {p:['e4','c6','d4','d5','exd5','cxd5','c4'],n:"Caro-Kann — Panov Attack",d:"White immediately attacks the isolated pawn with c4. Leads to IQP positions with active piece play."},
+  {p:['e4','c6','d4','d5','Nc3'],n:"Caro-Kann — Classical Setup",d:"White develops normally. The game will hinge on Black's ability to free the light-squared bishop."},
+  {p:['e4','c6'],n:"Caro-Kann Defense",d:"Structurally sound — Black aims for a strong central pawn on d5 without the weaknesses of the French's light-squared bishop."},
+
+  // ── QUEEN'S GAMBIT ───────────────────────────────────────
+  {p:['d4','d5','c4','e6','Nc3','Nf6','Bg5','Be7','e3','O-O','Nf3','h6'],n:"QGD — Orthodox Defense",d:"The main line of the Queen's Gambit Declined. Solid and time-tested — a favorite of world champions from Lasker to Carlsen."},
+  {p:['d4','d5','c4','e6','Nc3','Nf6','Bg5'],n:"QGD — Classical",d:"White pins the knight, keeping central tension. A rich strategic battle over the d5 pawn and queenside play."},
+  {p:['d4','d5','c4','e6','Nf3','Nf6','Nc3','Bb4'],n:"Ragozin Defense",d:"Black develops the bishop to b4, mixing QGD and Nimzo-Indian ideas. Active and somewhat underrated."},
+  {p:['d4','d5','c4','e6','Nc3','c6'],n:"Semi-Slav Defense",d:"Black prepares to hold the center with both c6 and e6. Leads to incredibly complex positions — the Meran and Anti-Meran systems."},
+  {p:['d4','d5','c4','c6'],n:"Slav Defense",d:"Black supports d5 with c6 rather than e6, keeping the light-squared bishop free. Solid and very popular at all levels."},
+  {p:['d4','d5','c4','c6','Nf3','Nf6','Nc3','dxc4'],n:"Slav — Accepted",d:"Black takes the gambit pawn. White will regain it but Black gets active piece play in the resulting open position."},
+  {p:['d4','d5','c4','e6'],n:"Queen's Gambit Declined",d:"Black declines and builds a solid, compact position. Favored by champions from Lasker to Carlsen — deeply strategic."},
+  {p:['d4','d5','c4','dxc4'],n:"Queen's Gambit Accepted",d:"Black takes the pawn, inviting White to recapture. The resulting open position favors active piece play."},
+  {p:['d4','d5','c4'],n:"Queen's Gambit",d:"Not a true gambit — White can almost always recover the pawn. One of the most respected and deeply studied openings in chess."},
+
+  // ── KING'S INDIAN ────────────────────────────────────────
+  {p:['d4','Nf6','c4','g6','Nc3','Bg7','e4','d6','Nf3','O-O','Be2','e5','O-O','Nc6'],n:"King's Indian — Classical",d:"The main line. White builds a strong center while Black prepares the ...e5 break. Rich strategic and tactical play follows."},
+  {p:['d4','Nf6','c4','g6','Nc3','Bg7','e4','d6','f3'],n:"King's Indian — Sämisch",d:"White plays aggressively with f3, supporting the center but weakening the kingside. Sharp and double-edged."},
+  {p:['d4','Nf6','c4','g6','Nc3','Bg7','e4','d6','Nf3','O-O','Be2','e5','d5'],n:"King's Indian — Mar del Plata",d:"White closes the center with d5. Classic opposite-wing attack — White goes queenside, Black attacks the king. Explosive chess."},
+  {p:['d4','Nf6','c4','g6','Nc3','Bg7','e4','d6','Nf3','O-O'],n:"King's Indian — Main Line",d:"Both sides have castled. The game now hinges on whether Black can generate sufficient kingside counterplay against White's center."},
+  {p:['d4','Nf6','c4','g6','Nc3','Bg7','e4','d6'],n:"King's Indian Defense",d:"Hypermodern — Black allows White to build an imposing center, then attacks it with e5 or c5. A true fighting opening."},
+
+  // ── NIMZO-INDIAN ─────────────────────────────────────────
+  {p:['d4','Nf6','c4','e6','Nc3','Bb4','e3'],n:"Nimzo-Indian — Rubinstein System",d:"White solidly defends and aims to show Black's bishop was misplaced. A classical, patient approach."},
+  {p:['d4','Nf6','c4','e6','Nc3','Bb4','Qc2'],n:"Nimzo-Indian — Classical",d:"White avoids doubled pawns and prepares e4. One of the most popular responses to the Nimzo-Indian."},
+  {p:['d4','Nf6','c4','e6','Nc3','Bb4','a3'],n:"Nimzo-Indian — Sämisch",d:"White immediately chases the bishop. Black accepts doubled White pawns but gets the bishop pair. Very principled play."},
+  {p:['d4','Nf6','c4','e6','Nc3','Bb4'],n:"Nimzo-Indian Defense",d:"Black pins the c3 knight and challenges White's central ambitions from move three. One of the richest and most respected defenses."},
+
+  // ── QUEEN'S INDIAN / BOGO-INDIAN ─────────────────────────
+  {p:['d4','Nf6','c4','e6','Nf3','b6','g3'],n:"Queen's Indian — Fianchetto",d:"White fianchettos to fight for the long diagonal. A quiet, strategic battle for control of e4 and d5."},
+  {p:['d4','Nf6','c4','e6','Nf3','b6'],n:"Queen's Indian Defense",d:"Black controls the center with pieces rather than pawns. Sophisticated positional play — a favorite of Petrosian and Karpov."},
+  {p:['d4','Nf6','c4','e6','Nf3','Bb4+'],n:"Bogo-Indian Defense",d:"Black checks with the bishop, similar to the Nimzo but without Nc3. A solid, flexible system."},
+
+  // ── GRÜNFELD ─────────────────────────────────────────────
+  {p:['d4','Nf6','c4','g6','Nc3','d5','cxd5','Nxd5','e4'],n:"Grünfeld — Exchange Variation",d:"The sharpest line — White grabs a big center and Black immediately counterattacks it. One of the most theoretically rich openings in chess."},
+  {p:['d4','Nf6','c4','g6','Nc3','d5'],n:"Grünfeld Defense",d:"Black allows White a massive center and immediately attacks it with pieces. Dynamic and counterintuitive — a hypermodern classic."},
+
+  // ── DUTCH DEFENSE ────────────────────────────────────────
+  {p:['d4','f5','c4','Nf6','g3','g6'],n:"Dutch — Leningrad",d:"Black sets up with f5 and g6, creating a dynamic setup with kingside attacking chances. The most aggressive Dutch system."},
+  {p:['d4','f5','c4','e6','Nf3','Nf6','g3','Be7'],n:"Dutch — Classical",d:"Black builds a solid setup with e6. More restrained than the Leningrad — strategic play with queenside and kingside options."},
+  {p:['d4','f5'],n:"Dutch Defense",d:"Black immediately stakes kingside space with f5. Uncompromising — leads to rich, unbalanced positions."},
+
+  // ── ENGLISH OPENING ──────────────────────────────────────
+  {p:['c4','e5'],n:"English — Reversed Sicilian",d:"Black occupies the center with e5. The position mirrors a Sicilian with colors reversed — rich strategic play."},
+  {p:['c4','c5'],n:"English — Symmetrical",d:"Both sides play c4/c5. The position is symmetrical but that doesn't mean drawish — complex maneuvering follows."},
+  {p:['c4','Nf6','Nc3','e6','e4'],n:"English — Four Knights",d:"White transposes toward a King's Indian Attack setup. Flexible and solid."},
+  {p:['c4'],n:"English Opening",d:"Flexible and asymmetrical — controls d5 from the flank and often transposes to other major systems."},
+
+  // ── RÉTI / CATALAN / LONDON ──────────────────────────────
+  {p:['Nf3','d5','c4'],n:"Réti — Main Line",d:"White combines kingside fianchetto ideas with c4 pressure. Can transpose to the English or Catalan."},
+  {p:['d4','Nf6','c4','e6','Nf3','d5','g3'],n:"Catalan Opening",d:"White combines the Queen's Gambit with a kingside fianchetto. Subtle long-term pressure on the d5 pawn — Kramnik's weapon."},
+  {p:['d4','d5','Nf3','Nf6','Bf4'],n:"London System",d:"Solid and easy to learn — White develops the bishop to f4 early, avoiding heavy theory. Popular at all levels."},
+  {p:['d4','Nf6','Nf3','g6','Bf4'],n:"London System (vs KID setup)",d:"White plays the London against Black's King's Indian setup. Quiet and solid with long-term positional pressure."},
+  {p:['Nf3'],n:"Réti Opening",d:"Hypermodern — White controls the center from a distance, aiming to undermine Black's central pawns with flanking play."},
+
+  // ── PIRC / MODERN / ALEKHINE ─────────────────────────────
+  {p:['e4','d6','d4','Nf6','Nc3','g6'],n:"Pirc — Classical",d:"Black fianchettos the bishop and prepares to challenge White's center. A flexible, hypermodern defense."},
+  {p:['e4','d6','d4','Nf6','Nc3','g6','f4'],n:"Pirc — Austrian Attack",d:"White strikes aggressively with f4. One of the sharpest responses to the Pirc — direct kingside attacking intentions."},
+  {p:['e4','d6'],n:"Pirc Defense",d:"Provocative and hypermodern — Black allows White to build an imposing center, then attacks it from the flanks."},
+  {p:['e4','g6','d4','Bg7'],n:"Modern Defense",d:"Similar to the Pirc but even more flexible — Black delays committing the knight and keeps maximum options."},
+  {p:['e4','Nf6'],n:"Alekhine's Defense",d:"Named for the former world champion — Black provokes White's pawns forward and attacks them from the flanks."},
+  {p:['e4','Nf6','e5','Nd5','d4','d6','c4'],n:"Alekhine's Defense — Four Pawns Attack",d:"White builds a huge pawn center. Black aims to prove it's overextended. High-stakes chess."},
+
+  // ── BENONI / BENKO ───────────────────────────────────────
+  {p:['d4','Nf6','c4','c5','d5','e6'],n:"Benoni Defense",d:"Black immediately challenges White's center with c5. Leads to dynamic, unbalanced positions where both sides have winning chances."},
+  {p:['d4','Nf6','c4','c5','d5','b5'],n:"Benko Gambit",d:"Black sacrifices a pawn for long-term queenside pressure and piece activity. One of the most practical gambits at club level."},
+
+  // ── KING'S FIANCHETTO & MISC ─────────────────────────────
+  {p:['e4','e5','Nf3','Nc6'],n:"Open Game — Two Knights Setup",d:"Both sides develop knights to natural squares. The game will likely define its character on move five."},
+  {p:['e4','e5','Nf3'],n:"King's Knight Opening",d:"The most principled response — developing a knight toward the center and preparing to castle kingside."},
+  {p:['e4','e5'],n:"Open Game",d:"Double king's pawn — classical, direct, and rich in tactical possibilities. The foundation of romantic chess."},
+  {p:['d4','Nf6','c4','g6','Nc3','Bg7'],n:"King's Indian Setup",d:"Black has committed to the King's Indian structure. The game will hinge on central and kingside play."},
+  {p:['d4','Nf6'],n:"Indian Defense Systems",d:"Black avoids an immediate central confrontation, preparing to fight back with flank play and piece pressure."},
+  {p:['d4','d5'],n:"Closed Game",d:"Queens pawn openings tend toward strategic positional play. The center will be contested over time rather than immediately."},
+  {p:['e4','c6'],n:"Caro-Kann Defense",d:"Structurally sound — aims for a strong d5 pawn without the weaknesses of the French's light-squared bishop."},
+  {p:['e4'],n:"King's Pawn Opening",d:"The most direct opening — staking a claim in the center and opening lines for the queen and bishop."},
+  {p:['d4'],n:"Queen's Pawn Opening",d:"A solid positional approach — controlling the center while keeping options open for many systems."},
 ];
 
 function identifyOpening(moves) {
