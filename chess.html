@@ -497,44 +497,46 @@ let currentElo   = suggestElo(playerRating, 'draw');
 // ═══════════════════════════════════════════════════════
 function initStockfish() {
   setSFStatus('loading');
-  const urls = [
-    // Same-origin: bundled in repo (most reliable, works offline, no CORS)
-    './stockfish.js',
-    // Remote fallbacks (require network, may hit CORS on some hosts)
-    'https://raw.githubusercontent.com/lichess-org/stockfish.js/master/stockfish.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js',
-  ];
-  tryLoadSF(urls, 0);
-}
-
-function tryLoadSF(urls, idx) {
-  if (idx >= urls.length) { setSFStatus('err'); return; }
-  const s = document.createElement('script');
-  s.src = urls[idx];
-  s.onload = () => {
-    try {
-      sfWorker = STOCKFISH();
+  // stockfish.js (niklasf build) is a pure Web Worker script.
+  // We must load it via Worker(), not as a <script> tag.
+  // Fetch the file and create a Blob Worker so it runs same-origin.
+  fetch('./stockfish.js')
+    .then(r => {
+      if (!r.ok) throw new Error('fetch failed: ' + r.status);
+      return r.blob();
+    })
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      sfWorker = new Worker(url);
       sfWorker.onmessage = (e) => {
         const msg = typeof e === 'object' ? e.data : e;
-        if (msg && msg.startsWith('bestmove') && sfResolve) {
+        if (typeof msg === 'string' && msg.startsWith('bestmove') && sfResolve) {
           const parts = msg.split(' ');
           const mv = parts[1];
           sfResolve(mv && mv !== '(none)' ? mv : null);
           sfResolve = null;
         }
       };
+      sfWorker.onerror = (e) => {
+        console.warn('SF worker error:', e);
+        sfReady = false;
+        setSFStatus('err');
+      };
       sfWorker.postMessage('uci');
       sfWorker.postMessage('isready');
       sfReady = true;
       setSFStatus('ok');
-    } catch(err) {
-      console.warn('SF init error:', err);
-      tryLoadSF(urls, idx + 1);
-    }
-  };
-  s.onerror = () => tryLoadSF(urls, idx + 1);
-  document.head.appendChild(s);
+      URL.revokeObjectURL(url);
+    })
+    .catch(err => {
+      console.warn('SF load failed:', err);
+      sfReady = false;
+      setSFStatus('err');
+    });
 }
+
+// tryLoadSF no longer needed — kept as no-op for safety
+function tryLoadSF() {}
 
 function setSFStatus(state) {
   const el = document.getElementById('sf-status');
