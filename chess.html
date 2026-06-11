@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Greyspace Chess</title>
 <meta name="theme-color" content="#0e0e0e">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="GS Chess">
-<link rel="manifest" href="data:application/json,{%22name%22:%22Greyspace%20Chess%22,%22short_name%22:%22GS%20Chess%22,%22start_url%22:%22.%2F%22,%22display%22:%22standalone%22,%22background_color%22:%22%230e0e0e%22,%22theme_color%22:%22%230e0e0e%22}">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
 <style>
 :root {
@@ -20,10 +23,11 @@
   --green:#6dbf74; --red:#e06c6c;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:var(--body);min-height:100vh;display:flex;flex-direction:column}
+body{background:var(--bg);color:var(--text);font-family:var(--body);display:grid;grid-template-columns:220px 1fr 300px;height:100vh;overflow:hidden}
 
-/* HEADER */
-header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;gap:12px;flex-wrap:wrap}
+/* LEFT COLUMN */
+.left-col{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+
 .brand{font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;white-space:nowrap}
 .hcontrols{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .rating-badge{display:flex;flex-direction:column;align-items:flex-end}
@@ -76,8 +80,8 @@ main{display:flex;flex:1;overflow:hidden}
 .cfile{bottom:2px;right:3px}
 .crank{top:2px;left:3px}
 
-/* SIDEBAR */
-.sidebar{flex:1;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;min-width:300px;max-width:400px}
+/* RIGHT COLUMN — analysis + history */
+.sidebar{display:flex;flex-direction:column;overflow:hidden;border-left:1px solid var(--border);background:var(--surface)}
 .ph{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border);flex-shrink:0}
 .ph-acc{color:var(--accent)}
 #ann-panel{padding:12px 14px;min-height:96px;flex-shrink:0}
@@ -157,13 +161,24 @@ main{display:flex;flex:1;overflow:hidden}
 #sf-status{font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;border-radius:2px;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
 #sf-status.ok{color:#6dbf74;border-color:#3a6b3e}
 #sf-status.err{color:#e06c6c;border-color:#6b3a3a}
+#sf-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.06em}
+#sf-badge{margin-top:auto}
 
-@media(max-width:720px){
-  main{flex-direction:column}
-  .sidebar{max-width:100%;border-left:none;border-top:1px solid var(--border)}
+@media(max-width:900px){
+  body{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;overflow:auto}
+  .left-col{flex-direction:row;flex-wrap:wrap;overflow:visible;border-right:none;border-bottom:1px solid var(--border)}
+  .brand{border-bottom:none;padding:12px 16px}
+  .left-section{border-bottom:none;padding:10px 12px}
+  .mode-group{flex-direction:row}
+  #elo-group{flex-direction:row;align-items:center;gap:8px}
+  input[type=range]{width:100px;margin-bottom:0}
+  .btn{width:auto}
+  .btn-row .btn{flex:none}
+  #sf-badge{border-top:none;margin-top:0;padding:10px 12px}
+  main{padding:12px}
+  .sidebar{border-left:none;border-top:1px solid var(--border);max-height:40vh}
   .sq{width:44px;height:44px}
   .piece{width:82%;height:82%}
-  input[type=range]{width:90px}
 }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -171,29 +186,45 @@ main{display:flex;flex:1;overflow:hidden}
 </head>
 <body>
 
-<header>
+<!-- LEFT COLUMN -->
+<div class="left-col">
   <span class="brand">♙ Greyspace Chess</span>
-  <div class="hcontrols">
-    <div class="rating-badge" id="rating-badge-wrap">
+
+  <div class="left-section" id="rating-badge-wrap">
+    <span class="left-label">Your Rating</span>
+    <div class="rating-badge">
       <span class="rating-val" id="player-rating-display">600</span>
-      <span class="rating-lbl">Your Rating</span>
+      <span class="rating-lbl">Adaptive ELO</span>
     </div>
-    <div class="sep" id="rating-sep"></div>
+  </div>
+
+  <div class="left-section">
+    <span class="left-label">Mode</span>
     <div class="mode-group">
       <button class="mode-btn active" id="mode-ai">vs AI</button>
       <button class="mode-btn" id="mode-p2p">Pass &amp; Play</button>
     </div>
-    <div class="sep"></div>
-    <div id="elo-group">
-      <span class="elo-label">AI ELO</span>
-      <input type="range" id="elo-slider" min="400" max="2400" step="50" value="650">
-      <span class="elo-num" id="elo-val">650</span>
-    </div>
-    <button class="btn primary" id="new-game-btn">New Game</button>
-    <button class="btn" id="flip-btn">⇅ Flip</button>
-    <span id="sf-status">SF …</span>
   </div>
-</header>
+
+  <div class="left-section" id="elo-group">
+    <span class="elo-label">AI ELO</span>
+    <input type="range" id="elo-slider" min="400" max="2400" step="50" value="650">
+    <span class="elo-num" id="elo-val">650</span>
+    <span class="left-label" id="top-elo" style="margin-top:4px;margin-bottom:0">ELO 650</span>
+  </div>
+
+  <div class="left-section">
+    <button class="btn primary" id="new-game-btn" style="margin-bottom:6px">New Game</button>
+    <div class="btn-row">
+      <button class="btn" id="flip-btn">⇅ Flip</button>
+    </div>
+  </div>
+
+  <div id="sf-badge">
+    <span id="sf-status">SF …</span>
+    <span id="sf-label">Stockfish</span>
+  </div>
+</div>
 
 <!-- Result overlay -->
 <div id="result-overlay">
@@ -238,7 +269,6 @@ main{display:flex;flex:1;overflow:hidden}
     <div class="player-bar">
       <div class="pdot b" id="top-dot"></div>
       <span class="pname" id="top-name">Stockfish</span>
-      <span class="pelo" id="top-elo">ELO 650</span>
       <div class="pulse" id="top-pulse" style="display:none"></div>
     </div>
 
@@ -248,7 +278,6 @@ main{display:flex;flex:1;overflow:hidden}
         <div class="promo-title">Promote Pawn</div>
         <div class="promo-pieces" id="promo-pieces"></div>
       </div>
-      <!-- Pass & play handoff screen sits inside board-wrap so it covers the board only -->
       <div id="handoff">
         <div class="handoff-who">Your turn</div>
         <div class="handoff-name" id="handoff-name">White</div>
@@ -1039,7 +1068,8 @@ function updatePlayerBars() {
   const isP2P = mode === 'p2p';
   // Top player
   document.getElementById('top-name').textContent = isP2P ? p2pNames[flipped?0:1] : 'Stockfish';
-  document.getElementById('top-elo').textContent  = isP2P ? '' : 'ELO ' + currentElo;
+  const topEloEl = document.getElementById('top-elo');
+  if (topEloEl) topEloEl.textContent = isP2P ? '' : 'ELO ' + currentElo;
   document.getElementById('top-dot').className    = 'pdot ' + (flipped ? 'w' : 'b');
   // Bottom player
   document.getElementById('bot-name').textContent = isP2P ? p2pNames[flipped?1:0] : 'You';

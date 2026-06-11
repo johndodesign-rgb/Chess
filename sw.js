@@ -1,10 +1,13 @@
 // Greyspace Chess — Service Worker
 // Cache-first strategy for offline play
 
-const CACHE = 'greyspace-chess-v1';
+const CACHE = 'greyspace-chess-v2';
 const PRECACHE = [
   './',
   './chess.html',
+  './manifest.webmanifest',
+  './icon-192.png',
+  './icon-512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js',
   './stockfish.js',
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap'
