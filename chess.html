@@ -65,7 +65,7 @@ main{display:flex;flex:1;overflow:hidden}
 
 #board-wrap{position:relative;user-select:none}
 #board{display:grid;grid-template-columns:repeat(8,1fr);border:2px solid var(--accent-dim);border-radius:2px;overflow:hidden}
-.sq{width:68px;height:68px;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
+.sq{width:clamp(48px,6.5vw,72px);height:clamp(48px,6.5vw,72px);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
 .sq.light{background:var(--light-sq)}
 .sq.dark{background:var(--dark-sq)}
 .sq.sel{background:var(--hl)!important}
@@ -132,7 +132,7 @@ main{display:flex;flex:1;overflow:hidden}
 .promo-p:hover{border-color:var(--accent)}
 
 /* RESULT OVERLAY */
-#result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center}
+#result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;grid-column:1/-1}
 #result-overlay.visible{display:flex}
 .rc{background:var(--surface);border:1px solid var(--accent-dim);border-radius:4px;padding:28px 32px;min-width:300px;max-width:380px;display:flex;flex-direction:column;gap:18px}
 .rh{font-family:var(--mono);font-size:21px;font-weight:600;color:var(--accent);text-align:center;letter-spacing:.04em}
@@ -226,7 +226,57 @@ main{display:flex;flex:1;overflow:hidden}
   </div>
 </div>
 
-<!-- Result overlay -->
+<!-- CENTER COLUMN -->
+<main>
+  <div class="board-area">
+    <div class="player-bar">
+      <div class="pdot b" id="top-dot"></div>
+      <span class="pname" id="top-name">Stockfish</span>
+      <div class="pulse" id="top-pulse" style="display:none"></div>
+    </div>
+
+    <div id="board-wrap">
+      <div id="board"></div>
+      <div class="promo-modal" id="promo-modal">
+        <div class="promo-title">Promote Pawn</div>
+        <div class="promo-pieces" id="promo-pieces"></div>
+      </div>
+      <div id="handoff">
+        <div class="handoff-who">Your turn</div>
+        <div class="handoff-name" id="handoff-name">White</div>
+        <div class="handoff-sub">Pass the device to the next player, then tap Ready when you can see the board.</div>
+        <button class="handoff-btn" id="handoff-btn">Ready — Show Board</button>
+      </div>
+    </div>
+
+    <div class="player-bar">
+      <div class="pdot w" id="bot-dot"></div>
+      <span class="pname" id="bot-name">You</span>
+      <span class="pelo" id="bot-elo">Human</span>
+      <div class="pulse" id="bot-pulse"></div>
+    </div>
+  </div>
+</main>
+
+<!-- RIGHT COLUMN -->
+<div class="sidebar">
+  <div id="review-bar">⏪ REVIEWING — navigate or move to resume</div>
+  <div class="ph"><span class="ph-acc">◈</span> Strategic Analysis</div>
+  <div id="ann-panel">
+    <div class="ann-body" style="color:var(--muted)">Make your first move to begin analysis.</div>
+  </div>
+  <div class="ph"><span class="ph-acc">≡</span> Move History</div>
+  <div id="hist-panel"><div id="move-list"></div></div>
+  <div class="nav-row">
+    <button class="nbtn" id="nav-first">⏮</button>
+    <button class="nbtn" id="nav-prev">◀</button>
+    <button class="nbtn" id="nav-next">▶</button>
+    <button class="nbtn" id="nav-last">⏭</button>
+  </div>
+  <div id="status-bar">White to move</div>
+</div>
+
+<!-- Result overlay — fixed position, outside grid flow -->
 <div id="result-overlay">
   <div class="rc">
     <div>
@@ -263,54 +313,6 @@ main{display:flex;flex:1;overflow:hidden}
     </div>
   </div>
 </div>
-
-<main>
-  <div class="board-area">
-    <div class="player-bar">
-      <div class="pdot b" id="top-dot"></div>
-      <span class="pname" id="top-name">Stockfish</span>
-      <div class="pulse" id="top-pulse" style="display:none"></div>
-    </div>
-
-    <div id="board-wrap">
-      <div id="board"></div>
-      <div class="promo-modal" id="promo-modal">
-        <div class="promo-title">Promote Pawn</div>
-        <div class="promo-pieces" id="promo-pieces"></div>
-      </div>
-      <div id="handoff">
-        <div class="handoff-who">Your turn</div>
-        <div class="handoff-name" id="handoff-name">White</div>
-        <div class="handoff-sub">Pass the device to the next player, then tap Ready when you can see the board.</div>
-        <button class="handoff-btn" id="handoff-btn">Ready — Show Board</button>
-      </div>
-    </div>
-
-    <div class="player-bar">
-      <div class="pdot w" id="bot-dot"></div>
-      <span class="pname" id="bot-name">You</span>
-      <span class="pelo" id="bot-elo">Human</span>
-      <div class="pulse" id="bot-pulse"></div>
-    </div>
-  </div>
-
-  <div class="sidebar">
-    <div id="review-bar">⏪ REVIEWING — navigate or move to resume</div>
-    <div class="ph"><span class="ph-acc">◈</span> Strategic Analysis</div>
-    <div id="ann-panel">
-      <div class="ann-body" style="color:var(--muted)">Make your first move to begin analysis.</div>
-    </div>
-    <div class="ph"><span class="ph-acc">≡</span> Move History</div>
-    <div id="hist-panel"><div id="move-list"></div></div>
-    <div class="nav-row">
-      <button class="nbtn" id="nav-first">⏮</button>
-      <button class="nbtn" id="nav-prev">◀</button>
-      <button class="nbtn" id="nav-next">▶</button>
-      <button class="nbtn" id="nav-last">⏭</button>
-    </div>
-    <div id="status-bar">White to move</div>
-  </div>
-</main>
 
 <script>
 // ═══════════════════════════════════════════════════════
@@ -1077,8 +1079,8 @@ function updatePlayerBars() {
   document.getElementById('bot-dot').className    = 'pdot ' + (flipped ? 'b' : 'w');
   // Header rating badge — hide in P2P
   const showRating = !isP2P;
-  document.getElementById('rating-badge-wrap').style.display = showRating ? '' : 'none';
-  document.getElementById('rating-sep').style.display = showRating ? '' : 'none';
+  const rbw = document.getElementById('rating-badge-wrap');
+  if (rbw) rbw.style.display = showRating ? '' : 'none';
   document.getElementById('elo-group').classList.toggle('hidden', isP2P);
 }
 
