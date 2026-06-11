@@ -23,19 +23,21 @@
   --green:#6dbf74; --red:#e06c6c;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:var(--body);display:grid;grid-template-columns:220px 1fr 300px;height:100vh;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--body);display:grid;grid-template-columns:260px 1fr 300px;height:100vh;overflow:hidden}
 
 /* LEFT COLUMN */
 .left-col{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.left-section{padding:20px 20px;border-bottom:1px solid var(--border)}
+.left-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:block}
 
-.brand{font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;white-space:nowrap}
+.brand{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;padding:24px 20px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}.brand-icon{width:22px;height:22px;flex-shrink:0;display:block}
 .hcontrols{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .rating-badge{display:flex;flex-direction:column;align-items:flex-end}
-.rating-val{font-family:var(--mono);font-size:17px;font-weight:600;color:var(--text);line-height:1.1}
+.rating-val{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--text);line-height:1;margin-bottom:4px}
 .rating-lbl{font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
 .sep{width:1px;height:28px;background:var(--border)}
 .mode-group{display:flex;gap:4px}
-.mode-btn{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all .15s}
+.mode-btn{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all .15s;text-align:left}
 .mode-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(200,168,75,.08)}
 .elo-label{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
 input[type=range]{-webkit-appearance:none;width:120px;height:3px;background:var(--border);outline:none;border-radius:2px}
@@ -50,10 +52,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 #elo-group.hidden{opacity:.25;pointer-events:none}
 
 /* LAYOUT */
-main{display:flex;flex:1;overflow:hidden}
+main{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);overflow:hidden;gap:8px;padding:16px 24px;--sq:min(calc((100vh - 96px) / 8), calc((100vw - 260px - 300px - 80px) / 8))}
 
 /* BOARD SIDE */
-.board-area{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px;flex-shrink:0;gap:8px}
+.board-area{display:flex;flex-direction:column;align-items:center;gap:8px}
 .player-bar{display:flex;align-items:center;gap:8px;width:100%;padding:0 2px}
 .pdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .pdot.w{background:#f0ebe0;border:1px solid #888}
@@ -65,7 +67,7 @@ main{display:flex;flex:1;overflow:hidden}
 
 #board-wrap{position:relative;user-select:none}
 #board{display:grid;grid-template-columns:repeat(8,1fr);border:2px solid var(--accent-dim);border-radius:2px;overflow:hidden}
-.sq{width:clamp(48px,6.5vw,72px);height:clamp(48px,6.5vw,72px);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
+.sq{width:var(--sq);height:var(--sq);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
 .sq.light{background:var(--light-sq)}
 .sq.dark{background:var(--dark-sq)}
 .sq.sel{background:var(--hl)!important}
@@ -162,7 +164,7 @@ main{display:flex;flex:1;overflow:hidden}
 #sf-status.ok{color:#6dbf74;border-color:#3a6b3e}
 #sf-status.err{color:#e06c6c;border-color:#6b3a3a}
 #sf-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.06em}
-#sf-badge{margin-top:auto}
+#sf-badge{margin-top:auto;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.06em}
 
 @media(max-width:900px){
   body{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;overflow:auto}
@@ -177,7 +179,7 @@ main{display:flex;flex:1;overflow:hidden}
   #sf-badge{border-top:none;margin-top:0;padding:10px 12px}
   main{padding:12px}
   .sidebar{border-left:none;border-top:1px solid var(--border);max-height:40vh}
-  .sq{width:44px;height:44px}
+  main{--sq:min(calc((100vw - 32px) / 8), 52px)}
   .piece{width:82%;height:82%}
 }
 </style>
@@ -188,7 +190,7 @@ main{display:flex;flex:1;overflow:hidden}
 
 <!-- LEFT COLUMN -->
 <div class="left-col">
-  <span class="brand">♙ Greyspace Chess</span>
+  <span class="brand"><span class="brand-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 45 45"> <g fill="#c8a84b" stroke="#7a6530" stroke-width="1.5" stroke-linejoin="round"> <path d=" M 11,14 L 11,9 L 15,9 L 15,11 L 20,11 L 20,9 L 25,9 L 25,11 L 30,11 L 30,9 L 34,9 L 34,14 L 31,17 L 31,29.5 L 33,32 L 33,36 L 12,36 L 12,32 L 14,29.5 L 14,17 Z "/> <path d="M 9,39 L 36,39 L 36,36 L 9,36 L 9,39 z"/> </g> <g fill="none" stroke="#7a6530" stroke-linecap="round"> <line stroke-width="1.2" x1="11" y1="14.0" x2="34" y2="14.0"/> <line stroke-width="0.8" x1="14" y1="17.0" x2="31" y2="17.0"/> <line stroke-width="0.8" x1="14" y1="29.5" x2="31" y2="29.5"/> <line stroke-width="1.2" x1="12" y1="32.0" x2="33" y2="32.0"/> </g> </svg></span>Greyspace Chess</span>
 
   <div class="left-section" id="rating-badge-wrap">
     <span class="left-label">Your Rating</span>
@@ -210,7 +212,6 @@ main{display:flex;flex:1;overflow:hidden}
     <span class="elo-label">AI ELO</span>
     <input type="range" id="elo-slider" min="400" max="2400" step="50" value="650">
     <span class="elo-num" id="elo-val">650</span>
-    <span class="left-label" id="top-elo" style="margin-top:4px;margin-bottom:0">ELO 650</span>
   </div>
 
   <div class="left-section">
@@ -1063,7 +1064,7 @@ function syncElo(elo) {
   currentElo = elo;
   document.getElementById('elo-slider').value = elo;
   document.getElementById('elo-val').textContent = elo;
-  document.getElementById('top-elo').textContent = 'ELO ' + elo;
+  const _te1=document.getElementById('top-elo'); if(_te1) _te1.textContent='ELO '+elo;
 }
 
 function updatePlayerBars() {
@@ -1125,7 +1126,7 @@ document.getElementById('elo-slider').addEventListener('input', function() {
   const v = parseInt(this.value);
   currentElo = v;
   document.getElementById('elo-val').textContent = v;
-  document.getElementById('top-elo').textContent = 'ELO ' + v;
+  const _te2=document.getElementById('top-elo'); if(_te2) _te2.textContent='ELO '+v;
   if (sfReady) sfWorker.postMessage('setoption name Skill Level value ' + getSkill(v));
 });
 
